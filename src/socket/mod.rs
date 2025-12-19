@@ -387,7 +387,7 @@ trait Socket {
 
 /* Baudrate */
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Baudrate {
     Baud1M,
     Baud800K,
