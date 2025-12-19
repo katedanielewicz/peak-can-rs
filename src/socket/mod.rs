@@ -14,6 +14,7 @@ use crate::error::{CanError, CanOkError};
 use crate::peak_lib;
 use crate::peak_can;
 
+use core::fmt;
 use std::ops::Deref;
 
 pub const STANDARD_MASK: u32 = 0x07_FF;
@@ -30,6 +31,17 @@ pub enum FrameConstructionError {
     TooMuchData,
     CanIdMessageTypeMismatch,
 }
+impl fmt::Display for FrameConstructionError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            FrameConstructionError::TooMuchData => write!(f, "Too much data for frame"),
+            FrameConstructionError::CanIdMessageTypeMismatch => {
+                write!(f, "CAN ID does not match message type")
+            }
+        }
+    }
+}
+impl std::error::Error for FrameConstructionError {}
 
 #[derive(Debug, Copy, Clone)]
 pub struct CanFrame {
